@@ -1,5 +1,7 @@
 # ufc_microservices
 UFC database mangament backend using a microservices architecture. Microservices communicate with an API gateway via GRPC. The API Gateway exposes a REST API which clients can access. 
+
+![image](graph.png)
 ## Dependencies
 ```sh
 pip install flask grpcio grpcio-tools 
