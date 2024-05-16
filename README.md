@@ -28,4 +28,6 @@ python .\fighter_stat_ms.py
 
 `GET`: **/fighters** - gets a lists of all the fighters.
 
-
+## Authors
+- Ammar Halloul
+- Hatem Kilani
