@@ -1,0 +1,90 @@
+syntax = "proto3";
+package ufc;
+
+service Fights {
+  rpc GetFight (FightRequest) returns (FightReply) {}
+  rpc GetAllFights (AllFightsRequest) returns (FightReply) {}
+  rpc AddFight (AddFightRequest) returns (AddFightReply) {}
+  rpc RemoveFight (RemoveFightRequest) returns (RemoveFightReply) {}
+}
+
+service FighterStats {
+  rpc GetFighter (FighterRequest) returns (FighterReply) {}
+  rpc GetAllFighters (AllFighterRequest) returns (AllFighterReply) {}
+  rpc FightAdded (MinimalFight) returns (FighterChangeReply) {}
+  rpc FightRemoved (MinimalFight) returns (FighterChangeReply) {}
+
+}
+
+message AllFightsRequest {}
+
+message MinimalFight {
+  string name1 = 1;
+  string name2 = 2;
+  int32  winner = 3;
+}
+
+message Fighter {
+    string name = 1;
+    int32 wins = 2;
+    int32 losses = 3;
+    int32 no_contest = 4;
+}
+
+message Fight {
+    int32 id = 1;
+    string name1 = 2;
+    string name2 = 3;
+    int32  winner = 4;
+    string won_by = 5;
+}
+
+message RemoveFightRequest {
+    int32 id = 1;
+}
+
+message RemoveFightReply {
+    int32 removed = 1;
+}
+
+message AddFightRequest {
+    string name1 = 1;
+    string name2 = 2;
+    int32  winner = 3;
+    string won_by = 4;
+}
+
+message AddFightReply {
+    int32 id = 1;
+}
+
+
+
+message FightRequest {
+    string name = 1;
+}
+
+message FightReply {
+    repeated Fight fights = 1;
+}
+
+message AllFighterRequest {}
+
+message AllFighterReply {
+  repeated Fighter fighters = 1;
+}
+
+message FighterChangeReply {
+  int32 added = 1;
+}
+
+message FighterRequest {
+  string name = 1;
+}
+
+
+message FighterReply {
+    Fighter fighter = 1;
+}
+
+
