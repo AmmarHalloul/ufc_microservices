@@ -14,14 +14,17 @@ FIGHTS_URI = "localhost:50052"
 def get_fighter(name):
     with grpc.insecure_channel(FIGHTER_STATS_URI) as channel: 
         stub = FighterStatsStub(channel)
-        res = stub.GetFighter(FighterRequest(name=name))
-        data = {
-            "name": res.fighter.name, 
-            "wins": res.fighter.wins,
-            "losses": res.fighter.losses,
-            "no_contest": res.fighter.no_contest,
-        }
-        
+        try:
+            res = stub.GetFighter(FighterRequest(name=name))
+            data = {
+                "name": res.fighter.name, 
+                "wins": res.fighter.wins,
+                "losses": res.fighter.losses,
+                "no_contest": res.fighter.no_contest,
+            }
+        except grpc.RpcError as e: 
+            return {}, 404
+            
         return jsonify(data)
 
 
@@ -67,11 +70,11 @@ def get_all_fights():
         data = []
         for i in res.fights:
             data.append({
-                "id": res.fight.id, 
-                "name1": res.fight.name1,
-                "name2": res.fight.name2,
-                "winner": res.fight.winner,
-                "won_by": res.fight.won_by,
+                "id": i.id, 
+                "name1": i.name1,
+                "name2": i.name2,
+                "winner": i.winner,
+                "won_by": i.won_by,
             })
         
         return jsonify(data)
